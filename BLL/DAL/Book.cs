@@ -20,7 +20,7 @@ public partial class Book
 
     public short? NumberOfPages { get; set; }
 
-    
+
     [Column(TypeName = "datetime")]
     [Required(ErrorMessage = "Date is Required!")]
     public DateTime? PublishDate { get; set; }

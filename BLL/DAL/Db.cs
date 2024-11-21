@@ -36,12 +36,12 @@ public partial class Db : DbContext
     {
         modelBuilder.Entity<Author>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Author__3214EC07A9A70D57");
+            entity.HasKey(e => e.Id).HasName("PK__Author__3214EC07E1CE359D");
         });
 
         modelBuilder.Entity<Book>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Book__3214EC07B8659A1F");
+            entity.HasKey(e => e.Id).HasName("PK__Book__3214EC07646FE3B6");
 
             entity.HasOne(d => d.Author).WithMany(p => p.Books)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -50,11 +50,9 @@ public partial class Db : DbContext
 
         modelBuilder.Entity<BookGenre>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookGenr__3214EC07BF65F9EB");
+            entity.HasKey(e => e.Id).HasName("PK__BookGenr__3214EC076F356D80");
 
-            entity.HasOne(d => d.Book).WithMany(p => p.BookGenres)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_BookGenre_Book");
+            entity.HasOne(d => d.Book).WithMany(p => p.BookGenres).HasConstraintName("FK_BookGenre_Book");
 
             entity.HasOne(d => d.Genre).WithMany(p => p.BookGenres)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -63,17 +61,17 @@ public partial class Db : DbContext
 
         modelBuilder.Entity<Genre>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Genre__3214EC0734B22C35");
+            entity.HasKey(e => e.Id).HasName("PK__Genre__3214EC07C4D01217");
         });
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC07B58E8AF5");
+            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC073FD98826");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3214EC074718944E");
+            entity.HasKey(e => e.Id).HasName("PK__User__3214EC07DCC35B9D");
 
             entity.Property(e => e.IsActive).HasDefaultValue(true);
 
