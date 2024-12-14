@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AuthorModel>
+﻿@model IEnumerable<GenreModel>
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +7,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "Author List";
+    ViewData["Title"] = "Genre List";
 }
 
 <div class="@containerDivClass">
@@ -39,10 +39,7 @@
                             @Html.DisplayNameFor(model => model.Name)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Surname)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.BooksCount)
+                            @Html.DisplayNameFor(model => model.BookCount)
                         </th>
                         <th></th>
                     </tr>
@@ -52,13 +49,10 @@
 				        <tr>
 					        <td>
 						        @Html.DisplayFor(modelItem => item.Name)
-					        </td>
-					        <td>
-						        @Html.DisplayFor(modelItem => item.Surname)
-					        </td>
+                            </td>
                             <td>
-						        @Html.DisplayFor(modelItem => item.BooksCount)
-					        </td>
+						        @Html.DisplayFor(modelItem => item.BookCount)
+                            </td>
 					        <td class="text-end w-25">
 						        <a asp-action="Details" asp-route-id="@item.Record.Id">Details</a>&nbsp;|&nbsp;
 						        <a asp-action="Edit" asp-route-id="@item.Record.Id">Edit</a>&nbsp;|&nbsp;

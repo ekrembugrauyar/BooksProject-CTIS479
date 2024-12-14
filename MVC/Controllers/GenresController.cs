@@ -10,127 +10,122 @@ using BLL.DAL;
 
 namespace MVC.Controllers
 {
-    public class BooksController : MvcController
+    public class GenresController : MvcController
     {
         // Service injections:
-        private readonly IService<Book, BookModel> _bookService;
-        private readonly IService<Author, AuthorModel> _authorService;
+        private readonly IService<Genre, GenreModel> _genreService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-        private readonly IService<Genre,GenreModel> _genreService;
+        //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
-        public BooksController(
-            IService<Book, BookModel> bookService,
-            IService<Author, AuthorModel> authorService,
+        public GenresController(
+            IService<Genre, GenreModel> genreService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            IService<Genre, GenreModel> genreService
+            //, IManyToManyRecordService ManyToManyRecordService
         )
         {
-            _bookService = bookService;
-            _authorService = authorService;
-
+            _genreService = genreService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            _genreService = genreService;
+            //_ManyToManyRecordService = ManyToManyRecordService;
         }
 
-        // GET: Books
+        // GET: Genres
         public IActionResult Index()
         {
             // Get collection service logic:
-            var list = _bookService.Query().ToList();
+            var list = _genreService.Query().ToList();
             return View(list);
         }
 
-        // GET: Books/Details/5
+        // GET: Genres/Details/5
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _bookService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _genreService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
         protected void SetViewData()
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            ViewData["AuthorId"] = new SelectList(_authorService.Query().ToList(), "Record.Id", "FullName");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            ViewBag.GenreIds = new MultiSelectList(_genreService.Query().ToList(), "Record.Id", "Name");
+            //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
         }
 
-        // GET: Books/Create
+        // GET: Genres/Create
         public IActionResult Create()
         {
             SetViewData();
             return View();
         }
 
-        // POST: Books/Create
+        // POST: Genres/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(BookModel book)
+        public IActionResult Create(GenreModel genre)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = _bookService.Create(book.Record);
+                var result = _genreService.Create(genre.Record);
                 if (result.IsSuccessful)
                 {
                     TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = book.Record.Id });
+                    return RedirectToAction(nameof(Details), new { id = genre.Record.Id });
                 }
                 ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(book);
+            return View(genre);
         }
 
-        // GET: Books/Edit/5
+        // GET: Genres/Edit/5
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _bookService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _genreService.Query().SingleOrDefault(q => q.Record.Id == id);
             SetViewData();
             return View(item);
         }
 
-        // POST: Books/Edit
+        // POST: Genres/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(BookModel book)
+        public IActionResult Edit(GenreModel genre)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = _bookService.Update(book.Record);
+                var result = _genreService.Update(genre.Record);
                 if (result.IsSuccessful)
                 {
                     TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = book.Record.Id });
+                    return RedirectToAction(nameof(Details), new { id = genre.Record.Id });
                 }
                 ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(book);
+            return View(genre);
         }
 
-        // GET: Books/Delete/5
+        // GET: Genres/Delete/5
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _bookService.Query().SingleOrDefault(q => q.Record.Id == id);
+            var item = _genreService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
         }
 
-        // POST: Books/Delete
+        // POST: Genres/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            var result = _bookService.Delete(id);
+            var result = _genreService.Delete(id);
             TempData["Message"] = result.Message;
             return RedirectToAction(nameof(Index));
         }

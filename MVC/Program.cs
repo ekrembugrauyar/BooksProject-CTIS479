@@ -9,11 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// AppSettings
+var appSettingsSection = builder.Configuration.GetSection(nameof(AppSettings));
+appSettingsSection.Bind(new AppSettings());
+
 //IoC Container
-builder.Services.AddDbContext<Db>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BooksDB;Integrated Security=True;Encrypt=True")));
+var connectionString = builder.Configuration.GetConnectionString("Db");
+builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IService<Author, AuthorModel>, AuthorService>();
 builder.Services.AddScoped<IService<Book, BookModel>, BookService>();
+builder.Services.AddScoped<IService<Genre, GenreModel>, GenreService>();
 
 // Build
 var app = builder.Build();

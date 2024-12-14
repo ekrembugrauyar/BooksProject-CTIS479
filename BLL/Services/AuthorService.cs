@@ -16,6 +16,8 @@ namespace BLL.Services
             if (_db.Authors.Any(a => (a.Name.ToUpper() == record.Name.ToUpper().Trim()) && a.Surname.ToUpper() == record.Surname.ToUpper().Trim()))
                 return Error("Author with the same name and surname exists!");
             record.Name = record.Name?.Trim();
+            record.Surname = record.Surname?.Trim();
+
             _db.Authors.Add(record);
             _db.SaveChanges(); // commit to the database
             return Success("Author created successfully.");
@@ -35,7 +37,7 @@ namespace BLL.Services
 
         public IQueryable<AuthorModel> Query()
         {
-            return _db.Authors.OrderBy(a => a.Name).Select(a => new AuthorModel() { Record = a });
+            return _db.Authors.Include(a => a.Books).OrderBy(a => a.Name).Select(a => new AuthorModel() { Record = a });
         }
 
         public ServiceBase Update(Author record)
@@ -44,10 +46,13 @@ namespace BLL.Services
                 return Error("Author with the same name and surname exists!");
 
             var entity = _db.Authors.SingleOrDefault(a => a.Id == record.Id);
+
             if (entity is null)
                 return Error("Author can't be found!");
+
             entity.Name = record.Name?.Trim();
             entity.Surname = record.Surname?.Trim();
+
             _db.Authors.Update(entity);
             _db.SaveChanges();
             return Success("Author updated successfully.");

@@ -22,21 +22,16 @@ namespace BLL.Models
         [DisplayName("Top Seller")]
         public string IsTopSeller => Record.IsTopSeller ? "Yes" : "No";
 
-        [DisplayName("Author ID")]
-        public string AuthorID => Record.Author?.Id.ToString();
-
         [DisplayName("Author")]
-        public string Author => Record.Author != null ? $"{Record.Author.Name} {Record.Author.Surname}" : "N/A";
+        public string Author => Record.Author?.Name + " " + Record.Author?.Surname;
 
-        /*[DisplayName("Genres")]
-        public string Genres => string.Join(", ", Record.BookGenres?.Select(bg => bg.Genre?.Name) ?? Enumerable.Empty<string>());
-
-        [DisplayName("Genre IDs")]
+        public string Genres => string.Join("<br>", Record.BookGenres?.Select(bg => bg.Genre?.Name) ?? Enumerable.Empty<string>());
+       
+        [DisplayName("Genres")]
         public List<int> GenreIds
         {
             get => Record.BookGenres?.Select(bg => bg.GenreId).ToList();
             set => Record.BookGenres = value.Select(v => new BookGenre() { GenreId = v }).ToList();
         }
-        */
     }
 }
