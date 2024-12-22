@@ -2,6 +2,7 @@
 using BLL.DAL;
 using BLL.Models;
 using BLL.Services.Bases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // Generated from Custom Template.
@@ -30,6 +31,7 @@ namespace MVC.Controllers
         }
 
         // GET: Authors
+        [AllowAnonymous]
         public IActionResult Index()
         {
             // Get collection service logic:
@@ -38,6 +40,7 @@ namespace MVC.Controllers
         }
 
         // GET: Authors/Details/5
+        [AllowAnonymous]
         public IActionResult Details(int id)
         {
             // Get item service logic:
@@ -54,6 +57,7 @@ namespace MVC.Controllers
         }
 
         // GET: Authors/Create
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Create()
         {
             SetViewData();
@@ -61,6 +65,7 @@ namespace MVC.Controllers
         }
 
         // POST: Authors/Create
+        [Authorize(Roles = "User, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(AuthorModel author)
@@ -82,6 +87,7 @@ namespace MVC.Controllers
         }
 
         // GET: Authors/Edit/5
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
@@ -93,6 +99,7 @@ namespace MVC.Controllers
         // POST: Authors/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Edit(AuthorModel author)
         {
             if (ModelState.IsValid)
@@ -111,6 +118,7 @@ namespace MVC.Controllers
         }
 
         // GET: Authors/Delete/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
@@ -120,6 +128,7 @@ namespace MVC.Controllers
 
         // POST: Authors/Delete
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {

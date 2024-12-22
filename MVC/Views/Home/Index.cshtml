@@ -1,8 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Ekrem Buğra Uyar";
+
+    var userName = User.Identity.IsAuthenticated ? User.Identity.Name : string.Empty;
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to @AppSettings.Title</h1>
+    <h1 class="display-4">Welcome to @AppSettings.Title @userName</h1>
     <p>@AppSettings.Description</p>
 </div>

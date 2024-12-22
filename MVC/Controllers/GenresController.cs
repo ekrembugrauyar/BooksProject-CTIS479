@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using BLL.Controllers.Bases;
-using BLL.Services;
+﻿using BLL.Controllers.Bases;
+using BLL.DAL;
 using BLL.Models;
 using BLL.Services.Bases;
-using BLL.DAL;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 // Generated from Custom Template.
 
@@ -112,6 +111,7 @@ namespace MVC.Controllers
         }
 
         // GET: Genres/Delete/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
@@ -122,6 +122,7 @@ namespace MVC.Controllers
         // POST: Genres/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:

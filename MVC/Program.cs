@@ -2,6 +2,7 @@ using BLL.DAL;
 using BLL.Models;
 using BLL.Services;
 using BLL.Services.Bases;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,18 @@ builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionStri
 builder.Services.AddScoped<IService<Author, AuthorModel>, AuthorService>();
 builder.Services.AddScoped<IService<Book, BookModel>, BookService>();
 builder.Services.AddScoped<IService<Genre, GenreModel>, GenreService>();
+builder.Services.AddScoped<IService<User, UserModel>, UserService>();
+builder.Services.AddScoped<IService<Role, RoleModel>, RoleService>();
+
+//Authentication 1
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Users/Login";
+        options.AccessDeniedPath = "/Users/Login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        options.SlidingExpiration = true;
+    });
 
 // Build
 var app = builder.Build();
@@ -35,6 +48,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//Authentication 2
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -1,4 +1,4 @@
-﻿@model AuthorModel
+﻿@model RoleModel
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +7,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "Author Details";
+    ViewData["Title"] = "Role Details";
 }
 
 <div class="@containerDivClass">
@@ -28,24 +28,16 @@
         <div class="col-2 fw-bold">
             @Html.DisplayNameFor(model => model.Name)
         </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.Name)
-        </div>
+            <div class="col-10">
+                @Html.DisplayFor(model => model.Name)
+            </div>
     </div>
     <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.Surname)
-        </div>
+            <div class="col-2 fw-bold">
+                @Html.DisplayNameFor(model => model.UserCount)
+            </div>
         <div class="col-10">
-            @Html.DisplayFor(model => model.Surname)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.BooksCount)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.BooksCount)
+            @Html.DisplayFor(model => model.UserCount)
         </div>
     </div>
 
@@ -61,19 +53,9 @@
     </div>
     *@
 
-    <hr />
-    @if(User.IsInRole("Admin"))
-    {
-        <a asp-action="Edit" asp-route-id="@Model.Record.Id">Edit</a>
-        @:&nbsp;| &nbsp;
-        <a asp-action="Delete" asp-route-id="@Model.Record.Id">Delete</a>
-        @:&nbsp;| &nbsp;
-    }
-    @if(User.IsInRole("User"))
-    {
-        <a asp-action="Edit" asp-route-id="@Model.Record.Id">Edit</a>
-        @:&nbsp;| &nbsp;
-    }
+    <hr /> 
+    <a asp-action="Edit" asp-route-id="@Model.Record.Id">Edit</a>&nbsp;|&nbsp;
+    <a asp-action="Delete" asp-route-id="@Model.Record.Id">Delete</a>&nbsp;|&nbsp;
     <a asp-action="Index">Back to List</a>
 </div>
 }

@@ -29,7 +29,7 @@
                     @Model.Count() record(s) found.
                 </div>
                 <div class="col-2 text-end">
-                    <a asp-action="Create">Create</a>
+                    @if(User.IsInRole("Admin") || User.IsInRole("User")){<a asp-action="Create">Create</a>}
                 </div>
             </div>
             <table class="table table-striped table-hover">
@@ -60,9 +60,17 @@
 						        @Html.DisplayFor(modelItem => item.BooksCount)
 					        </td>
 					        <td class="text-end w-25">
-						        <a asp-action="Details" asp-route-id="@item.Record.Id">Details</a>&nbsp;|&nbsp;
-						        <a asp-action="Edit" asp-route-id="@item.Record.Id">Edit</a>&nbsp;|&nbsp;
-						        <a asp-action="Delete" asp-route-id="@item.Record.Id">Delete</a>
+						        <a asp-action="Details" asp-route-id="@item.Record.Id">Details</a>
+                                @if(User.IsInRole("Admin") || User.IsInRole("User"))
+                                {
+                                    @:&nbsp;|&nbsp;
+                                    <a asp-action="Edit" asp-route-id="@item.Record.Id">Edit</a>
+                                }
+                                @if(User.IsInRole("Admin"))
+                                {
+                                    @:&nbsp;|&nbsp;
+                                    <a asp-action="Delete" asp-route-id="@item.Record.Id">Delete</a>
+                                }
 					        </td>
 				        </tr>
 		            }

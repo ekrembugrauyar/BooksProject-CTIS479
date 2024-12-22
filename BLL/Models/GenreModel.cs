@@ -10,6 +10,6 @@ namespace BLL.Models
         public string Name => Record.Name;
 
         [DisplayName("Book Count")]
-        public string BookCount => Record.BookGenres.Count.ToString() ?? "0";
+        public string BookCount => Record.BookGenres?.Count.ToString() ?? "0";
     }
 }
