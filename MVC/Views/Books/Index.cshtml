@@ -85,10 +85,16 @@
 					        </td>
 					        <td class="text-end w-25">
 						        <a asp-action="Details" asp-route-id="@item.Record.Id">Details</a>&nbsp;|&nbsp;
-						        <a asp-action="Edit" asp-route-id="@item.Record.Id">Edit</a>
+						        <a asp-action="Edit" asp-route-id="@item.Record.Id">Edit</a>&nbsp;
+                                @if(User.Identity.IsAuthenticated)
+                                {
+                                    @:|&nbsp;
+                                    <a asp-action="Add" asp-controller="Favorites" asp-route-bookId="@item.Record.Id">Add to Favorites</a>
+                                    @:&nbsp;
+                                }
                                 @if(User.IsInRole("Admin"))
                                 {
-                                    @:&nbsp;|&nbsp;
+                                    @:|&nbsp;
                                     <a asp-action="Delete" asp-route-id="@item.Record.Id">Delete</a>
                                 }
 					        </td>

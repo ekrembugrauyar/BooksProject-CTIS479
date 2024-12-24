@@ -23,6 +23,9 @@ builder.Services.AddScoped<IService<Genre, GenreModel>, GenreService>();
 builder.Services.AddScoped<IService<User, UserModel>, UserService>();
 builder.Services.AddScoped<IService<Role, RoleModel>, RoleService>();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<HttpServiceBase, HttpService>();
+
 //Authentication 1
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -32,6 +35,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
         options.SlidingExpiration = true;
     });
+
+//Session:
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(15);
+});
 
 // Build
 var app = builder.Build();
@@ -53,6 +62,8 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
