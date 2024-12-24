@@ -163,3 +163,13 @@ VALUES
 (19, 2), -- The Hobbit, Fantasy
 (20, 3); -- The Great Gatsby, Classics
 GO
+
+SET IDENTITY_INSERT [dbo].[Role] ON
+INSERT INTO [dbo].[Role] ([Id], [Name]) VALUES (1, N'Admin')
+INSERT INTO [dbo].[Role] ([Id], [Name]) VALUES (2, N'User')
+SET IDENTITY_INSERT [dbo].[Role] OFF
+
+SET IDENTITY_INSERT [dbo].[User] ON
+INSERT INTO [dbo].[User] ([Id], [UserName], [Password], [IsActive], [RoleId]) VALUES (1, N'admin', N'admin', 1, 1)
+INSERT INTO [dbo].[User] ([Id], [UserName], [Password], [IsActive], [RoleId]) VALUES (2, N'bugra', N'bugra', 1, 2)
+SET IDENTITY_INSERT [dbo].[User] OFF

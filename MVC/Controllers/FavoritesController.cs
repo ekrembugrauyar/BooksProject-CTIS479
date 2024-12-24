@@ -62,6 +62,10 @@ namespace MVC.Controllers
                 _httpService.SetSession(SESSIONKEY, favorites);
                 TempData["Message"] = $"\"{book.Name}\" added to favorites.";
             }
+            else
+            {
+                TempData["Message"] = "This book is already in your favorites.";
+            }
             return RedirectToAction("Index", "Books");
         }
     }
